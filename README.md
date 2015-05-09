@@ -20,3 +20,15 @@ openssl req -new -key key.pem -out csr.pem
 openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
 rm csr.pem
 ```
+
+# start jenkins, with https, and http still available
+
+```
+java -jar jenkins.war --httpsPort=8443 --httpsCert=cert.pem --httpsKey=key.pem
+```
+
+# start jenkins, with https, http not available
+
+```
+java -jar jenkins.war --httpsPort=8443 --httpsCert=cert.pem --httpsKey=key.pem --httpPort=-1
+```
