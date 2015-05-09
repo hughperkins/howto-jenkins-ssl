@@ -24,11 +24,11 @@ rm csr.pem
 # start jenkins, with https, and http still available
 
 ```
-java -jar jenkins.war --httpsPort=8443 --httpsCert=cert.pem --httpsKey=key.pem
+java -jar jenkins.war --httpsPort=8443 --httpsCertificate=cert.pem --httpsPrivateKey=key.pem
 ```
 
 # start jenkins, with https, http not available
 
 ```
-java -jar jenkins.war --httpsPort=8443 --httpsCert=cert.pem --httpsKey=key.pem --httpPort=-1
+java -jar jenkins.war --httpsPort=8443 --httpsCertificate=cert.pem --httpsPrivateKey=key.pem --httpPort=-1
 ```
