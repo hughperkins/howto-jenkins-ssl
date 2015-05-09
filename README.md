@@ -21,14 +21,37 @@ openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
 rm csr.pem
 ```
 
-# start jenkins, with https, and http still available
+# start jenkins
+
+## both https and http
 
 ```
 java -jar jenkins.war --httpsPort=8443 --httpsCertificate=cert.pem --httpsPrivateKey=key.pem
 ```
 
-# start jenkins, with https, http not available
+## https only, dont open http port
 
 ```
 java -jar jenkins.war --httpsPort=8443 --httpsCertificate=cert.pem --httpsPrivateKey=key.pem --httpPort=-1
 ```
+
+# starting a slave
+
+* Convert the cert.pem to cert.der:
+```
+ openssl x509 -outform der -in cert.pem -out cert.der
+```
+
+* create keystore, containing this cert:
+
+```
+keytool -import -alias testweb.local -keystore cacerts -file cert.der
+# reply trust certificate=yes
+# put keystore password of 'changeit', or make your own password
+```
+* launch slave
+  * as for normal slave launch, but add `-Djavax.net.trustStore=cacerts
+```
+java -Djavax.net.ssl.trustStore=cacerts -jar slave.jar -jnlpUrl https://jenkins.myweb.com:8443/computer/testnode/slave-agent.jnlp
+```
+=> will work ok :-)
