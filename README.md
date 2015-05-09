@@ -23,13 +23,13 @@ rm csr.pem
 
 # start jenkins
 
-## both https and http
+* if you want both https and http:
 
 ```
 java -jar jenkins.war --httpsPort=8443 --httpsCertificate=cert.pem --httpsPrivateKey=key.pem
 ```
 
-## https only, dont open http port
+* if you want https only, dont open http port:
 
 ```
 java -jar jenkins.war --httpsPort=8443 --httpsCertificate=cert.pem --httpsPrivateKey=key.pem --httpPort=-1
