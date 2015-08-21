@@ -49,6 +49,7 @@ keytool -import -alias testweb.local -keystore cacerts -file cert.der
 # reply trust certificate=yes
 # put keystore password of 'changeit', or make your own password
 ```
+* transfer this file to the slave computer somehow (eg via /var/www/html, and download from slave)
 * launch slave
   * as for normal slave launch, but add `-Djavax.net.trustStore=cacerts
 ```
