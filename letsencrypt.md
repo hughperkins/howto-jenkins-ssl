@@ -1,5 +1,7 @@
 # Let's encrypt
 
+THIS IS IN PROGRESS, DOESNT WORK YET!  USE README.md for now :-)
+
 Getting a standard certificate for your jenkins, using Let's Encrypt.
 
 By comparison with the self-signed, the pre-requisites are significantly stricter:
