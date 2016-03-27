@@ -1,4 +1,4 @@
-# Let's encrypt
+# https on Jenkins using Let's Encrypt
 
 Getting a standard certificate for your jenkins, using Let's Encrypt.
 
