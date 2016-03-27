@@ -2,6 +2,8 @@
 
 Getting a standard certificate for your jenkins, using Let's Encrypt.
 
+This is not quite working yet, so please use [README.md](README.md) for now.
+
 By comparison with the self-signed, the pre-requisites are significantly stricter:
 - you need a domain name, with an 'A' record
 - you need administrative access to your server, and concretely:

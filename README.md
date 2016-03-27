@@ -1,8 +1,6 @@
 # howto-jenkins-ssl
 quick how to on activating ssl on jenkins, so I can find it easily
 
-New!  Alternative procedure, using Lets Encrypt certificate, available now.  See [letsencrypt.md](letsencrypt.md).
-
 # given:
 
 - your website is at jenkins.myweb.com
