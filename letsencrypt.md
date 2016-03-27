@@ -2,8 +2,6 @@
 
 Getting a standard certificate for your jenkins, using Let's Encrypt.
 
-(Note: this is still beta, might be some kinks left)
-
 By comparison with the self-signed, the pre-requisites are significantly stricter:
 - you need a domain name, with an 'A' record
 - you need administrative access to your server, and concretely:
@@ -47,34 +45,55 @@ sudo service apache2 start  # if you stopped it earlier
 Then:
 - certificates should be generated in `/etc/letsencrypt/live/jenkins.mydomain.com`:
   - cert.pem
+  - fullchain.pem
   - privkey.pem
 
 ### 2. Convert the Lets Encrypt certificates to jenkins format
 
 Given:
-- you've generated `cert.pem` and `privkey.pem` in `/etc/letsencrypt/live/jenkins.mydomain.com`
+- you've generated `fullchain.pem` and `privkey.pem` in `/etc/letsencrypt/live/jenkins.mydomain.com`
 - you are in the directory containing `jenkins.war`
 
 When you do:
 ```
-sudo cp /etc/letsencrypt/live/jenkins.mydomain.com/cert.pem .
-sudo cp /etc/letsencrypt/live/jenkins.mydomain.com/privkey.pem .
-openssl rsa -in privkey.pem -out key.pem
+sudo cp /etc/letsencrypt/live/jenkins.mydomain.com/* .
+openssl rsa -in privkey.pem -out privkey-rsa.pem
 ```
 Then:
-- `key.pem` will be generated.  This is in rsa private key format
+- `privkey-rsa.pem` will be generated.  This is in rsa private key format
 
 ### 3. Start jenkins
 
 Given:
 - you are in the directory containing `jenkins.war`
-- `cert.pem` and `key.pem` are in this directory
+- `fullchain.pem` and `privkey-rsa.pem` are in this directory
 
 When you do:
 ```
-java -jar jenkins.war  --httpsPort=8443 --httpPort=-1 --httpsCertificate=cert.pem --httpsPrivateKey=key.pem
+java -jar jenkins.war  --httpsPort=8443 --httpPort=-1 --httpsCertificate=fullchain.pem --httpsPrivateKey=privkey-rsa.pem
 ```
 Then:
 - jenkins should start
 - jenkins should be available on port 8443, using https, and using your Let's Encrypt certificate
 
+# starting a slave
+
+* Convert the cert.pem, from above, to cert.der:
+```
+ openssl x509 -outform der -in cert.pem -out cert.der
+```
+
+* create keystore, containing this cert:
+
+```
+keytool -import -alias testweb.local -keystore cacerts -file cert.der
+# reply trust certificate=yes
+# put keystore password of 'changeit', or make your own password
+```
+* transfer this file to the slave computer somehow (eg via /var/www/html, and download from slave)
+* launch slave
+  * as for normal slave launch, but add `-Djavax.net.trustStore=cacerts
+```
+java -Djavax.net.ssl.trustStore=cacerts -jar slave.jar -jnlpUrl https://jenkins.mydomain.com:8443/computer/testnode/slave-agent.jnlp
+```
+=> will work ok :-)
