@@ -21,7 +21,9 @@ everything from Docker.  Then I dont have to think about what things it's changi
 
 Given:
 - you have Docker installed (see https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-getting-started )
-- you are connected to the webserver, which is connected to the internet, with ports 80 and 443 published to the internet
+- you are connected to the webserver
+- webserver has internet connection
+- ports 80 and 443 are available from the internet
 - you have a dns A record for jenkins.mydomain.com, pointing to the webserver
 - you have sudo access to the webserver
 
@@ -41,8 +43,7 @@ exit
 sudo service apache2 start  # if you stopped it earlier
 ```
 Then:
-- certificates should be generated in `/etc/letsencrypt/live/jenkins.mydomain.com`
-- there are two files we need:
+- certificates should be generated in `/etc/letsencrypt/live/jenkins.mydomain.com`:
   - cert.pem
   - privkey.pem
 
@@ -50,7 +51,7 @@ Then:
 
 Given:
 - you've generated `cert.pem` and `privkey.pem` in `/etc/letsencrypt/live/jenkins.mydomain.com`
-- you are in the directory with jenkins.war present
+- you are in the directory containing `jenkins.war`
 
 When you do:
 ```
@@ -64,8 +65,8 @@ Then:
 ### 3. Start jenkins
 
 Given:
-- you are in the directory with jenkins.war present
-- you've generated `cert.pem` and `key.pem`, into this directory
+- you are in the directory containing `jenkins.war`
+- `cert.pem` and `key.pem` are in this directory
 
 When you do:
 ```
@@ -73,5 +74,5 @@ java -jar jenkins.war  --httpsPort=8443 --httpPort=-1 --httpsCertificate=cert.pe
 ```
 Then:
 - jenkins should start
-- jenkins should be available on port 8443, using https, and using your Lets Encrypt certificate, for your domain
+- jenkins should be available on port 8443, using https, and using your Let's Encrypt certificate
 
