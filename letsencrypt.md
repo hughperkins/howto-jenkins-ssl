@@ -97,3 +97,9 @@ keytool -import -alias jenins.mydomain.com -keystore cacerts -file cert.der
 java -Djavax.net.ssl.trustStore=cacerts -jar slave.jar -jnlpUrl https://jenkins.mydomain.com:8443/computer/testnode/slave-agent.jnlp
 ```
 => will work ok :-)
+
+# Connecting from your browser
+
+- first go to https://helloworld.letsencrypt.org
+  - this will add appropriate certs to your browser
+- then browse to your jenkins, on https, and you should get green padlock :-)
