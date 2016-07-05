@@ -2,7 +2,7 @@
 
 Getting a standard certificate for your jenkins, using Let's Encrypt.
 
-By comparison with the self-signed, the pre-requisites are significantly stricter:
+By comparison with the [self-signed](https://github.com/hughperkins/howto-jenkins-ssl), the pre-requisites are significantly stricter:
 - you need a domain name, with an 'A' record
 - you need administrative access to your server, and concretely:
   - you need to be able to serve files on ports 80 and 443
