@@ -72,11 +72,14 @@ Given:
 
 When you do:
 ```
-java -jar jenkins.war  --httpsPort=8443 --httpPort=-1 --httpsCertificate=fullchain.pem --httpsPrivateKey=privkey-rsa.pem
+java -jar jenkins.war  --httpsPort=8443 --httpPort=-1 --httpsCertificate=cert.pem --httpsPrivateKey=privkey-rsa.pem
 ```
+
 Then:
 - jenkins should start
 - jenkins should be available on port 8443, using https, and using your Let's Encrypt certificate
+
+(Note: there is some uncertainty on my part on fullchain.pem vs cert.pem.  Documentation says should use fullchain.pem, but cert.pem seems to work better for me?  Neither let me connect until I first send my browser to https://helloworld.letsencrypt.org , then retry the jenkins site)
 
 # starting a slave
 
