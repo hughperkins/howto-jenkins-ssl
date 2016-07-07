@@ -56,7 +56,9 @@ Given:
 
 When you do:
 ```
-sudo cp /etc/letsencrypt/live/jenkins.mydomain.com/* .
+sudo bash
+cp /etc/letsencrypt/live/jenkins.mydomain.com/* .
+exit
 openssl rsa -in privkey.pem -out privkey-rsa.pem
 ```
 Then:
